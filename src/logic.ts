@@ -50,9 +50,9 @@ const createList = (request: Request, response: Response): Response => {
       ...requestData,
     };
 
-    let ids = data.map((item) => item.id + 1);
+    let ids = data.map((item) => item.id);
     data.forEach(() => {
-      if (ids.includes(requestResponse.id + 1)) {
+      if (ids.includes(requestResponse.id)) {
         floatId++;
         requestResponse.id = floatId;
       }
