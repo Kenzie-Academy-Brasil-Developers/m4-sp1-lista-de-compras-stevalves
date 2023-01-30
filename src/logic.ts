@@ -44,19 +44,19 @@ const createList = (request: Request, response: Response): Response => {
   try {
     const requestData: iCreatePurchaseList = validateNewList(request.body);
 
-    let floatId: number = 1
+    let floatId: number = 1;
     const requestResponse: iCreatePurchaseReturn = {
       id: floatId,
       ...requestData,
     };
-    
-    let ids = data.map(item => item.id+1)
-    for(let i = 0; i < data.length; i++){
-      if(data[i].id === requestResponse.id || ids.includes(requestResponse.id+1)){
-        floatId++
-        requestResponse.id = floatId
+
+    let ids = data.map((item) => item.id + 1);
+    data.forEach(() => {
+      if (ids.includes(requestResponse.id + 1)) {
+        floatId++;
+        requestResponse.id = floatId;
       }
-    }
+    });
 
     data.push(requestResponse);
     return response.status(201).json(requestResponse);
