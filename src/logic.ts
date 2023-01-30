@@ -43,12 +43,20 @@ const validateKeysProduct = (payload: any) => {
 const createList = (request: Request, response: Response): Response => {
   try {
     const requestData: iCreatePurchaseList = validateNewList(request.body);
-    const id: number = data.length + 1;
 
+    let floatId: number = 1
     const requestResponse: iCreatePurchaseReturn = {
-      id: id,
+      id: floatId,
       ...requestData,
     };
+    
+    let ids = data.map(item => item.id+1)
+    for(let i = 0; i < data.length; i++){
+      if(data[i].id === requestResponse.id || ids.includes(requestResponse.id+1)){
+        floatId++
+        requestResponse.id = floatId
+      }
+    }
 
     data.push(requestResponse);
     return response.status(201).json(requestResponse);
