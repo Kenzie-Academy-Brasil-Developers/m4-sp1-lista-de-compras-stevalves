@@ -10,6 +10,10 @@ const validateNewList = (payload: any) => {
   const keys: string[] = Object.keys(payload);
   const requiredKeys: string[] = ["listName", "data"];
 
+  if(typeof(payload.listName) != "string"){
+    throw new Error(`Invalid entry type`);
+  }
+
   const requerimentsIsOk: boolean = requiredKeys.every((key: string) => {
     return keys.includes(key);
   });
@@ -32,6 +36,10 @@ const validateKeysProduct = (payload: any) => {
   const filter: boolean = keys.every((key: string) => {
     return requiredKeys.includes(key);
   });
+
+  if(typeof(payload.quantity) != "string"){
+    throw new Error(`Invalid entry type`);
+  }
 
   if (!filter) {
     throw new Error(`Only acceptable keys are ( ${requiredKeys} )`);
@@ -108,7 +116,7 @@ const editItem = (request: Request, response: Response): Response => {
     const listIndex: number = dataList!.data.indexOf(dataListItem!);
     dataList.data[listIndex] = { ...dataList.data[listIndex], ...requestData };
 
-    return response.status(200).json(dataList);
+    return response.status(200).json(dataListItem);
   } catch (error) {
     if (error instanceof Error) {
       return response.status(400).json({
